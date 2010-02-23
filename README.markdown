@@ -1,10 +1,10 @@
-Simple MVC - A MVC that uses Convention over Configuration (CoC) paradigm
+PlainMVC - A MVC that uses Convention over Configuration (CoC) paradigm
 =======
 
-Simple MVC has focus on simplicity, speed and no more many config files :)
-Simple MVC uses Twig as default Template Engine.
+PlainMVC has focus on simplicity, speed and no more many config files :)
+PlainMVC uses Twig as default Template Engine.
 
-For example, you can have a decoupled Controller without inheritance or interface. IoC Principles was used to make it possible in SimpleMVC.
+For example, you can have a decoupled Controller without inheritance or interface. IoC Principles was used to make it possible in PlainMVC.
 
 
     class FoobarController {
@@ -18,9 +18,9 @@ Only with this, you can display your "yourtemplate.tpl" file in some module. Sim
 dispatcher on the fly.
 
 
-SimpleMVC has the following directories structure:
+PlainMVC has the following directories structure:
 
--/application
+/application
     - yourFirstModule
         - controllers
             - here you can have one or more controllers. You choose how many you want !
@@ -33,16 +33,16 @@ SimpleMVC has the following directories structure:
     - otherModule
         - ...
     - ...
--/config
-    - SimpleMVC do NOT need this directory. You can use it for your own configs
--/library
-    - simplemvc and their dependencies
--/log
+/config
+    - PlainMVC do NOT need this directory. You can use it for your own configs
+/library
+    - PlainMVC and their dependencies
+/log
     - assertion fails log and more
--/tmp
+/tmp
     - tpl_cache
         - Twig template cache
--/web
+/web
     - index.php <- default
     /admin
         - index.php <- yes, you can have other directories with owns Controllers. 
@@ -54,6 +54,6 @@ SimpleMVC has the following directories structure:
 For more examples, you can read Controllers files at /application/modulo/controllers/ and runs the examples.
 
 The URL will like something like as: 
-    http://yourserver/web/index/yourModuleName/yourActionName
+    http://yourserver/plainmvc/web/index/yourModuleName/yourActionName
 or, if you need GET parameters:
-    http://yourserver/web/index/yourModuleName/yourActionName/yourGetKey/your Get Value/yourOtherGetKey/yourOtherValue
+    http://yourserver/plainmvc/web/index/yourModuleName/yourActionName/yourGetKey/your Get Value/yourOtherGetKey/yourOtherValue
