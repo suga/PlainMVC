@@ -7,12 +7,12 @@ Simple MVC uses Twig as default Template Engine.
 For example, you can have a decoupled Controller without inheritance or interface. IoC Principles was used to make it possible in SimpleMVC.
 
 
-class FoobarController {
+    class FoobarController {
 
-    public function someMethodAction(SimpleHttpRequest $request, SimpleHttpResponse $response) {
-        $response->getView()->render('yourtemplate.tpl');
+        public function someMethodAction(SimpleHttpRequest $request, SimpleHttpResponse $response) {
+            $response->getView()->render('yourtemplate.tpl');
+        }
     }
-}
 
 Only with this, you can display your "yourtemplate.tpl" file in some module. SimpleHttpRequest and SimpleHttpResponse are injected by SimpleRequest
 dispatcher on the fly.
@@ -20,7 +20,7 @@ dispatcher on the fly.
 
 SimpleMVC has the following directories structure:
 
-/application
+-/application
     - yourFirstModule
         - controllers
             - here you can have one or more controllers. You choose how many you want !
@@ -33,16 +33,16 @@ SimpleMVC has the following directories structure:
     - otherModule
         - ...
     - ...
-/config
+-/config
     - SimpleMVC do NOT need this directory. You can use it for your own configs
-/library
+-/library
     - simplemvc and their dependencies
-/log
+-/log
     - assertion fails log and more
-/tmp
+-/tmp
     - tpl_cache
         - Twig template cache
-/web
+-/web
     - index.php <- default
     /admin
         - index.php <- yes, you can have other directories with owns Controllers. 
