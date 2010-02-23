@@ -9,12 +9,12 @@ For example, you can have a decoupled Controller without inheritance or interfac
 
     class FoobarController {
 
-        public function someMethodAction(SimpleHttpRequest $request, SimpleHttpResponse $response) {
+        public function someMethodAction(PlainHttpRequest $request, PlainHttpResponse $response) {
             $response->getView()->render('yourtemplate.tpl');
         }
     }
 
-Only with this, you can display your "yourtemplate.tpl" file in some module. SimpleHttpRequest and SimpleHttpResponse are injected by SimpleRequest
+Only with this, you can display your "yourtemplate.tpl" file in some module. PlainHttpRequest and PlainHttpResponse are injected by PlainRequest
 dispatcher on the fly.
 
 
