@@ -154,7 +154,7 @@ class Twig_Lexer implements Twig_LexerInterface
     $pos3 = strpos($this->code, $this->options['tag_block'][0], $this->cursor);
 
     // if no matches are left we return the rest of the template
-    // as simple text token
+    // as Plain text token
     if (false === $pos1 && false === $pos2 && false === $pos3)
     {
       $rv = new Twig_Token(Twig_Token::TEXT_TYPE, substr($this->code, $this->cursor), $this->lineno);

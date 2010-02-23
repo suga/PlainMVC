@@ -2,7 +2,7 @@
 /**
  * Numeric types
  * @author hlegius
- * @package \library\Simple\core\types
+ * @package \library\Plain\core\types
  * @version January, 16 2010
  */
 abstract class Numeric extends Type {

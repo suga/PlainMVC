@@ -2,20 +2,20 @@
 /**
  * NotFound Action method Controller
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\simplemvc\core\view
+ * @package \library\Plainmvc\core\view
  * @version January, 17 2010
  */
-final class SimpleNotFoundActionController {
+final class PlainNotFoundActionController {
 
     /**
      * Intercepter methods
      * @param string $classNotFound
-     * @param array(SimpleHttpRequest) $request
+     * @param array(PlainHttpRequest) $request
      */
     public function __call($classNotFound, array $request) {
-        /* @var $response SimpleHttpResponse */
+        /* @var $response PlainHttpResponse */
         $response = $request[1];
-        /* @var $request SimpleHttpRequest */
+        /* @var $request PlainHttpRequest */
         $request = $request[0];
         
         /** @todo helio.costa -- logar action exception e zaz */

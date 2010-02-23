@@ -1,6 +1,6 @@
 <?php
 /**
-   * Spyc -- A Simple PHP YAML Class
+   * Spyc -- A Plain PHP YAML Class
    * @version 0.4.5
    * @author Vlad Andersen <vlad.andersen@gmail.com>
    * @author Chris Wanstrath <chris@ozmm.org>
@@ -33,7 +33,7 @@ if (!function_exists('spyc_load_file')) {
 }
 
 /**
-   * The Simple PHP YAML Class.
+   * The Plain PHP YAML Class.
    *
    * This class can be used to read a YAML file and convert its contents
    * into a PHP array.  It currently supports a very limited subsection of
@@ -123,7 +123,7 @@ class Spyc {
      *
      * The load method, when supplied with a YAML stream (string or file),
      * will do its best to convert YAML in a file into a PHP array.  Pretty
-     * simple.
+     * Plain.
      *  Usage:
      *  <code>
      *   $array = Spyc::YAMLLoad('lucky.yaml');
@@ -142,7 +142,7 @@ class Spyc {
      * Load a string of YAML into a PHP array statically
      *
      * The load method, when supplied with a YAML string, will do its best 
-     * to convert YAML in a string into a PHP array.  Pretty simple.
+     * to convert YAML in a string into a PHP array.  Pretty Plain.
      *
      * Note: use this function if you don't want files from the file system
      * loaded and processed as YAML.  This is of interest to people concerned
@@ -166,7 +166,7 @@ class Spyc {
      * Dump YAML from PHP array statically
      *
      * The dump method, when supplied with an array, will do its best
-     * to convert the array into friendly YAML.  Pretty simple.  Feel free to
+     * to convert the array into friendly YAML.  Pretty Plain.  Feel free to
      * save the returned string as nothing.yaml and pass it around.
      *
      * Oh, and you can decide how big the indent is and what the wordwrap
@@ -192,7 +192,7 @@ class Spyc {
      * Dump PHP array to YAML
      *
      * The dump method, when supplied with an array, will do its best
-     * to convert the array into friendly YAML.  Pretty simple.  Feel free to
+     * to convert the array into friendly YAML.  Pretty Plain.  Feel free to
      * save the returned string as tasteful.yaml and pass it around.
      *
      * Oh, and you can decide how big the indent is and what the wordwrap

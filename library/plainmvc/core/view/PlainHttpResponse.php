@@ -2,18 +2,18 @@
 /**
  * HTTP Response class
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\Simple\core\view
+ * @package \library\Plain\core\view
  * @version January, 27 2010
  */
-final class SimpleHttpResponse {
+final class PlainHttpResponse {
     /**
-     * SimpleHttpResponse Instance
-     * @var SimpleHttpResponse
+     * PlainHttpResponse Instance
+     * @var PlainHttpResponse
      */
     private static $instance;
     /**
      * Smarty Dependency injection
-     * @var SimpleTemplate
+     * @var PlainTemplate
      */
     private static $view;
 
@@ -24,23 +24,23 @@ final class SimpleHttpResponse {
      * @return void
      */
     private function __construct() {
-        self::$view = new SimpleTemplate();
+        self::$view = new PlainTemplate();
     }
     
     /**
-     * Retrieve SimpleHTTP Response
-     * @return SimpleHttpResponse
+     * Retrieve PlainHTTP Response
+     * @return PlainHttpResponse
      */
     public static function getInstance() {
-        if (!self::$instance instanceof SimpleHttpRequest) {
-            self::$instance = new SimpleHttpResponse();
+        if (!self::$instance instanceof PlainHttpRequest) {
+            self::$instance = new PlainHttpResponse();
         }
         return self::$instance;
     }
     
     /**
      * View Controller
-     * @return SimpleTemplate
+     * @return PlainTemplate
      */
     public function getView() {
         return self::$view;

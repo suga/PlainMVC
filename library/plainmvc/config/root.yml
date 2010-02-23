@@ -1,4 +1,4 @@
-simplemvc:
+Plain:
 #    application: 'production'
     application: 'development'
     

@@ -7,11 +7,11 @@ class FoobarAdminController {
 
     /**
      * To access this Action:
-     * http://yourserver/simplemvc/web/admin/index/modulo/foobar
-     * @param SimpleHttpRequest $request
-     * @param SimpleHttpResponse $response
+     * http://yourserver/Plainmvc/web/admin/index/modulo/foobar
+     * @param PlainHttpRequest $request
+     * @param PlainHttpResponse $response
      */
-    public function foobarAction(SimpleHttpRequest $request, SimpleHttpResponse $response) {        
+    public function foobarAction(PlainHttpRequest $request, PlainHttpResponse $response) {        
         $response->getView()->render('admin/index.tpl');
     }
 }

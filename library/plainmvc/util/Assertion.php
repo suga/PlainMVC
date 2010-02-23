@@ -2,7 +2,7 @@
 /**
  * Assertion class
  * @author Hélio Costa e Silva <hlegius@foobug.com.br>
- * @package \library\Simple\util
+ * @package \library\Plain\util
  * @version January, 23 2010
  */
 
@@ -46,11 +46,11 @@ class Assertion {
     public function __construct() {
         if (is_null(self::$rootconfig)) {
             $spyc = new Spyc();
-            self::$rootconfig = $spyc->load(SimpleConfig::getInstance()->getConfigDirectory() . DIRECTORY_SEPARATOR . 'root.yml');
+            self::$rootconfig = $spyc->load(PlainConfig::getInstance()->getConfigDirectory() . DIRECTORY_SEPARATOR . 'root.yml');
         }
                 
         /* @todo helio.costa -- preciso ler do YML */
-        $this->status = self::$rootconfig['Simple']['assert_' . self::$rootconfig['Simple']['application']];
+        $this->status = self::$rootconfig['Plain']['assert_' . self::$rootconfig['Plain']['application']];
         
         if ($this->getStatus() == self::ENABLED) {
             assert_options(ASSERT_ACTIVE, 1);

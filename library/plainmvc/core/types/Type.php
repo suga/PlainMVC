@@ -2,7 +2,7 @@
 /**
  * Default Type
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\Simple\core\types
+ * @package \library\Plain\core\types
  * @version January 16, 2010
  */
 abstract class Type {

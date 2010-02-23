@@ -3,9 +3,9 @@
  * Facade for Twig_Environment
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
  * @version Feb, 22 2010
- * @package \library\simplemvc\core\view
+ * @package \library\Plainmvc\core\view
  */
-final class SimpleTemplate {
+final class PlainTemplate {
     /**
      * Twig_Environment
      * @var Twig_Environment
@@ -25,7 +25,7 @@ final class SimpleTemplate {
         $templatesDirs = array();
         
         // Looking for Templates directories        
-        foreach (SimpleConfig::getInstance()->getModulesDirectories() as $moduleDirectory) {
+        foreach (PlainConfig::getInstance()->getModulesDirectories() as $moduleDirectory) {
             foreach (scandir($moduleDirectory) as $file) {
                 $currentFile = new String($moduleDirectory . DIRECTORY_SEPARATOR . $file);
                 $file = new String($file);
@@ -34,13 +34,13 @@ final class SimpleTemplate {
                     continue;
                 }
                 
-                if ($file->equals(SimpleConfig::getInstance()->getTemplatesDirPattern())) {
+                if ($file->equals(PlainConfig::getInstance()->getTemplatesDirPattern())) {
                     $templatesDirs[] = realpath($currentFile);
                 }
             }
         }
         $twigLoader = new Twig_Loader_Filesystem($templatesDirs);
-        self::$template = new Twig_Environment($twigLoader, array('cache' => (SimpleConfig::getInstance()->getTempDirectory() . 
+        self::$template = new Twig_Environment($twigLoader, array('cache' => (PlainConfig::getInstance()->getTempDirectory() . 
                                                                                     DIRECTORY_SEPARATOR . 'tpl_cache')));    
         $this->variables = new ArrayObject();
     }

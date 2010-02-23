@@ -2,13 +2,13 @@
 /**
  * HTTP Request Interceptor
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\simplemvc\core\view
+ * @package \library\Plainmvc\core\view
  * @version January, 17 2010
  */
-final class SimpleHttpRequest {
+final class PlainHttpRequest {
     /**
-     * Instance of SimpleHttpRequest
-     * @var SimpleHttpRequest
+     * Instance of PlainHttpRequest
+     * @var PlainHttpRequest
      */
     private static $instance;
     /**
@@ -122,12 +122,12 @@ final class SimpleHttpRequest {
     }
     
     /**
-     * Retrieve SimpleHttpRequest instance
-     * @return SimpleHttpRequest
+     * Retrieve PlainHttpRequest instance
+     * @return PlainHttpRequest
      */
     public static function getInstance() {
-        if (!self::$instance instanceof SimpleHttpRequest) {
-            self::$instance = new SimpleHttpRequest(new String($_SERVER['QUERY_STRING']));
+        if (!self::$instance instanceof PlainHttpRequest) {
+            self::$instance = new PlainHttpRequest(new String($_SERVER['QUERY_STRING']));
         }
         return self::$instance;
     }
@@ -138,7 +138,7 @@ final class SimpleHttpRequest {
      * @return void
      */
     private function generateDirname($dirname) {
-        $dirname = str_replace(SimpleConfig::getInstance()->getPublicDirectory(), '', $dirname);
+        $dirname = str_replace(PlainConfig::getInstance()->getPublicDirectory(), '', $dirname);
         
         if (empty($dirname)) {
             return ;
@@ -167,7 +167,7 @@ final class SimpleHttpRequest {
             $this->throwClassNotFoundException();
             return ;
         }
-        $str_directory = SimpleConfig::getInstance()->getApplicationDirectory() . DIRECTORY_SEPARATOR . SimpleHttpRequest::getInstance()->getModule() . DIRECTORY_SEPARATOR . SimpleConfig::CONTROLLERS_DIRECTORY;
+        $str_directory = PlainConfig::getInstance()->getApplicationDirectory() . DIRECTORY_SEPARATOR . PlainHttpRequest::getInstance()->getModule() . DIRECTORY_SEPARATOR . PlainConfig::CONTROLLERS_DIRECTORY;
         
         if (!is_dir($str_directory)) {
             $this->throwClassNotFoundException();
@@ -187,7 +187,7 @@ final class SimpleHttpRequest {
             $className = $className . 'Controller';
             try {
                 $reflection = new ReflectionClass($className);
-                $method = SimpleHttpRequest::getInstance()->getAction() . 'Action';
+                $method = PlainHttpRequest::getInstance()->getAction() . 'Action';
 
                 if ($reflection->hasMethod($method)) {
                     $reflectionMethod = new ReflectionMethod($className, $method);
@@ -204,13 +204,13 @@ final class SimpleHttpRequest {
         }
         
         if (is_null($class)) {
-            $class = new SimpleNotFoundActionController();
+            $class = new PlainNotFoundActionController();
         } else {
             $this->controller = new String($className);
             $this->controllerDirectory = new String(realpath(dirname($classFile)));
         }
         
-        $class->{SimpleHttpRequest::getInstance()->getAction() . 'Action'}($this, SimpleHttpResponse::getInstance());
+        $class->{PlainHttpRequest::getInstance()->getAction() . 'Action'}($this, PlainHttpResponse::getInstance());
     }
     
     /**
@@ -218,9 +218,9 @@ final class SimpleHttpRequest {
      * @return void
      */
     private function throwClassNotFoundException() {
-        $actionName = (SimpleHttpRequest::getInstance()->getAction()) ? SimpleHttpRequest::getInstance()->getAction()->__toString() : 'notFound';
-        $class = new SimpleNotFoundActionController();
-        $class->{$actionName . 'Action'}($this, SimpleHttpResponse::getInstance());
+        $actionName = (PlainHttpRequest::getInstance()->getAction()) ? PlainHttpRequest::getInstance()->getAction()->__toString() : 'notFound';
+        $class = new PlainNotFoundActionController();
+        $class->{$actionName . 'Action'}($this, PlainHttpResponse::getInstance());
         return ;
     }
     

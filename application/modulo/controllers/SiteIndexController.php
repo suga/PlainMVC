@@ -9,9 +9,9 @@ class SiteIndexController {
 
 	/**
      * My first action
-     * Access using: http://yourserver/simplemvc/web/index/modulo
+     * Access using: http://yourserver/Plainmvc/web/index/modulo
      */
-    public function indexAction(SimpleHttpRequest $request) {
+    public function indexAction(PlainHttpRequest $request) {
         echo 'Index';
         /* @var $parameter String */
         foreach ($request->getRequestParameters() as $index => $parameter) {
@@ -23,10 +23,10 @@ class SiteIndexController {
     
     /**
      * Other action
-     * Access using: http://yourserver/simplemvc/web/index/modulo/barfoobaz
+     * Access using: http://yourserver/Plainmvc/web/index/modulo/barfoobaz
      * @param $request
      */
-    public function barfoobazAction(SimpleHttpRequest $request) {
+    public function barfoobazAction(PlainHttpRequest $request) {
         echo $request->getControllerDirectory();
     }
 }

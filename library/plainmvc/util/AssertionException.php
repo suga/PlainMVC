@@ -2,7 +2,7 @@
 /**
  * Assertion Runtime Exception
  * @author Hélio Costa e Silva <hlegius@foobug.com.br>
- * @package \library\Simple\util
+ * @package \library\Plain\util
  * @version January, 23 2010
  */
 class AssertionException extends RuntimeException {

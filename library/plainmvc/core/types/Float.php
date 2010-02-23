@@ -2,7 +2,7 @@
 /**
  * Float type
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\Simple\core\types
+ * @package \library\Plain\core\types
  *
  */
 class Float extends Numeric {

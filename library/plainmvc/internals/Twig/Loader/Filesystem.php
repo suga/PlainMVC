@@ -119,7 +119,7 @@ class Twig_Loader_Filesystem implements Twig_LoaderInterface
 
       $file = realpath($path.DIRECTORY_SEPARATOR.$name);
 
-      // simple security check
+      // Plain security check
       if (0 !== strpos($file, $path))
       {
         throw new RuntimeException('Looks like you try to load a template outside configured directories.');

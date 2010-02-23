@@ -5,6 +5,6 @@
  * @package \web
  * @version January, 17 2010
  */
-require_once "../library/simplemvc/core/Autoload.php";
+require_once "../library/plainmvc/core/Autoload.php";
 
-SimpleHttpRequest::getInstance()->dispatch(dirname(__FILE__));
+PlainHttpRequest::getInstance()->dispatch(dirname(__FILE__));

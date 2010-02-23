@@ -1,10 +1,10 @@
 <?php
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'SimpleConfig.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'PlainConfig.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'internals' . DIRECTORY_SEPARATOR . 'Twig/Autoloader.php';
 /**
  * Autoload classes
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\simplemvc\core
+ * @package \library\Plainmvc\core
  * @version January, 16 2010
  */
 class Autoload {
@@ -48,7 +48,7 @@ class Autoload {
         if (isset(self::$str_autoload)) {
             return;
         }
-        $arrobj_autoload = SimpleConfig::getInstance()->getAutoloadPath();
+        $arrobj_autoload = PlainConfig::getInstance()->getAutoloadPath();
         
         foreach ($arrobj_autoload as $path) {
             self::$str_autoload .= $path . PATH_SEPARATOR;

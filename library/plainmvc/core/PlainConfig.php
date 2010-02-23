@@ -1,19 +1,19 @@
 <?php
 /**
- * Simple general Configuration
+ * Plain general Configuration
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\simplemvc\core
+ * @package \library\Plainmvc\core
  * @version January, 16 2010
  */
-class SimpleConfig {
+class PlainConfig {
     /**
      * Autoloadable directory
      * @var ArrayObject
      */
     private $directoryTree;
     /**
-     * SimpleConfig instance
-     * @var SimpleConfig
+     * PlainConfig instance
+     * @var PlainConfig
      */
     private static $instance;
     /**
@@ -32,7 +32,7 @@ class SimpleConfig {
      */
     private static $publicDirectory;
     /**
-     * Library (Simple) Directory
+     * Library (Plain) Directory
      * @var string
      */
     private static $libraryDirectory;
@@ -78,12 +78,12 @@ class SimpleConfig {
     }
     
     /**
-     * Retrieve a SimpleConfig instance
-     * @return SimpleConfig
+     * Retrieve a PlainConfig instance
+     * @return PlainConfig
      */
     public static function getInstance() {
-        if (!self::$instance instanceof SimpleConfig) {
-            self::$instance = new SimpleConfig();
+        if (!self::$instance instanceof PlainConfig) {
+            self::$instance = new PlainConfig();
         }
         
         return self::$instance;
@@ -139,7 +139,7 @@ class SimpleConfig {
      * @return string
      */
     public function getConfigDirectory() {
-        return realpath(self::$libraryDirectory . DIRECTORY_SEPARATOR . 'simplemvc' . DIRECTORY_SEPARATOR . self::$configDirectory);
+        return realpath(self::$libraryDirectory . DIRECTORY_SEPARATOR . 'Plainmvc' . DIRECTORY_SEPARATOR . self::$configDirectory);
     }
     
     /**
