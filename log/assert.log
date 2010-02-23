@@ -1,0 +1,24 @@
+-- Sat 01 2010 16:35:32 --
+[assert error] 
+Condition: 
+Details: FoobarActionController@online15
+-----------------------------------------------
+
+-- Sat 01 2010 16:39:02 --
+[assert error] 
+Condition: 
+Details: FoobarActionController@online15
+-----------------------------------------------
+
+-- Sat 01 2010 16:40:24 --
+[assert error] 
+Condition: 
+Details: FoobarActionController@online14
+-----------------------------------------------
+
+-- Sat 01 2010 16:40:47 --
+[assert error] 
+Condition: 'bar' == 'baz'
+Details: FoobarActionController @online 15
+-----------------------------------------------
+

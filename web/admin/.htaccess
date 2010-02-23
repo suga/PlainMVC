@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule ^index/?$           index.php?request=
+RewriteRule ^index/((.*){0,})?$ index.php?request=$1

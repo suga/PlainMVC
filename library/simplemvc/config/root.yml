@@ -1,0 +1,18 @@
+simplemvc:
+#    application: 'production'
+    application: 'development'
+    
+#    database_production:
+#        dbname: 'fooprod'
+#        user: 'hlegius'
+#        pass: 'var'
+#        server: 'localhost:3306'
+        
+#    database_development:
+#        dbname: 'foo'
+#        user: 'hlegius'
+#        pass: 'baz'
+#        server: 'localhost'
+                
+    assert_production: 'off'
+    assert_development: 'on'
