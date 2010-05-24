@@ -6,46 +6,55 @@
  * @version January, 17 2010
  */
 final class PlainHttpRequest {
+
     /**
      * Instance of PlainHttpRequest
      * @var PlainHttpRequest
      */
     private static $instance;
+
     /**
      * Request from client
      * @var ArrayObject
      */
     private $request;
+
     /**
      * Get Request Parameters
      * @var ArrayObject
      */
     private $requestGet;
+
     /**
      * Post Request Parameters
      * @var unknown_type
      */
     private $requestPost;
+
     /**
      * Module called
      * @var String
      */
     private $module;
+
     /**
      * Action requested
      * @var String
      */
     private $action;
+
     /**
      * Controller Class name
      * @var String
      */
     private $controller;
+
     /**
      * Controller file directory
      * @var String
      */
     private $controllerDirectory;
+
     /**
      * Directory Suffix
      * if need to use web/admin; web/foobar; web/foo/bar
@@ -55,17 +64,16 @@ final class PlainHttpRequest {
      * @var string
      */
     private $directorySuffix = 'Index';
-    
-    
+
     /**
      * HttpRequest class
      * Construct HTTP Request
      * @param String $queryString
      */
     private function __construct(String $queryString) {
-        $this->request      = new ArrayObject();
-        $this->requestGet   = new ArrayObject();
-        $this->requestPost  = new ArrayObject();
+        $this->request = new ArrayObject();
+        $this->requestGet = new ArrayObject();
+        $this->requestPost = new ArrayObject();
         
         $str_decodeUrl = str_replace("request=", "", urldecode($queryString));
         $str_decodeUrl = rtrim($str_decodeUrl, ' /'); // yeap, with blank space
@@ -73,25 +81,24 @@ final class PlainHttpRequest {
         $int_totalModuleActions = count($arr_moduleAction);
         
         if (empty($str_decodeUrl)) {
-            /* @todo helio.costa -- criar engine para módulo default */
-            return ;
+            return;
         }
-
+        
         if ($int_totalModuleActions <= 1) {
             $arr_moduleAction[] = 'index'; // if action not set, try to open index
         }
-
+        
         if ($int_totalModuleActions > 2) {
             // Populating GET Request Parameters
-            for ($i=0; $i<count($arr_moduleAction) / 2; $i+=2) {
-                $this->requestGet->offsetSet($arr_moduleAction[$i+2], new String($arr_moduleAction[$i+3]));
+            for ($i = 0; $i < count($arr_moduleAction) / 2; $i += 2) {
+                $this->requestGet->offsetSet($arr_moduleAction[$i + 2], new String($arr_moduleAction[$i + 3]));
             }
         }
         if (is_array($_POST)) {
             // Population POST parameters
             $arr_moduleAction = array_merge($arr_moduleAction, $_POST);
             
-             foreach ($_POST as $index => $value) {
+            foreach ($_POST as $index => $value) {
                 $this->requestPost->offsetSet($index, new String($value));
             }
         }
@@ -104,23 +111,23 @@ final class PlainHttpRequest {
         }
         
         if (!$arr_moduleAction->offsetExists(2)) {
-            return ;
+            return;
         }
         $arr_moduleAction->offsetUnset(0);
-        $arr_moduleAction->offsetUnset(1);   
-
-        for ($i=0; $i<=$arr_moduleAction->count() / 2; $i+=2) {
-            if (!$arr_moduleAction->offsetExists($i+2)) {
+        $arr_moduleAction->offsetUnset(1);
+        
+        for ($i = 0; $i <= $arr_moduleAction->count() / 2; $i += 2) {
+            if (!$arr_moduleAction->offsetExists($i + 2)) {
                 break;
             }
-            if (is_bool($arr_moduleAction->offsetGet($i+2)) || $arr_moduleAction->offsetGet($i+2) == "") {
+            if (is_bool($arr_moduleAction->offsetGet($i + 2)) || $arr_moduleAction->offsetGet($i + 2) == "") {
                 continue;
             }
-            $parameter = ($arr_moduleAction->offsetExists($i+3)) ? $arr_moduleAction->offsetGet($i+3) : null;
-            $this->request->offsetSet($arr_moduleAction->offsetGet($i+2), new String($parameter));
+            $parameter = ($arr_moduleAction->offsetExists($i + 3)) ? $arr_moduleAction->offsetGet($i + 3) : null;
+            $this->request->offsetSet($arr_moduleAction->offsetGet($i + 2), new String($parameter));
         }
     }
-    
+
     /**
      * Retrieve PlainHttpRequest instance
      * @return PlainHttpRequest
@@ -131,7 +138,7 @@ final class PlainHttpRequest {
         }
         return self::$instance;
     }
-    
+
     /**
      * Manipules dirname for Controllers name convention
      * @param string $dirname
@@ -141,7 +148,7 @@ final class PlainHttpRequest {
         $dirname = str_replace(PlainConfig::getInstance()->getPublicDirectory(), '', $dirname);
         
         if (empty($dirname)) {
-            return ;
+            return;
         }
         $arr_subdirectories = explode(DIRECTORY_SEPARATOR, $dirname);
         
@@ -157,21 +164,21 @@ final class PlainHttpRequest {
         
         $this->directorySuffix = $str_dirpath;
     }
-    
+
     /**
      * Dispatch controller
      * @return void
      */
-    public function dispatch($dirname = '') {        
+    public function dispatch($dirname = '') {
         if (!self::getModule()) {
             $this->throwClassNotFoundException();
-            return ;
+            return;
         }
         $str_directory = PlainConfig::getInstance()->getApplicationDirectory() . DIRECTORY_SEPARATOR . PlainHttpRequest::getInstance()->getModule() . DIRECTORY_SEPARATOR . PlainConfig::CONTROLLERS_DIRECTORY;
         
         if (!is_dir($str_directory)) {
             $this->throwClassNotFoundException();
-            return ;
+            return;
         }
         $this->generateDirname($dirname);
         $class = null;
@@ -188,7 +195,7 @@ final class PlainHttpRequest {
             try {
                 $reflection = new ReflectionClass($className);
                 $method = PlainHttpRequest::getInstance()->getAction() . 'Action';
-
+                
                 if ($reflection->hasMethod($method)) {
                     $reflectionMethod = new ReflectionMethod($className, $method);
                     
@@ -197,10 +204,10 @@ final class PlainHttpRequest {
                         break;
                     }
                 }
-            } catch (ReflectionException $rfe) { 
-                /** @internal its cannot be happen */
-                /** if happen, check class name and file name. */
-            }            
+            } catch (ReflectionException $rfe) {
+            /** @internal its cannot be happen */
+            /** if happen, check class name and file name. */
+            }
         }
         
         if (is_null($class)) {
@@ -212,18 +219,37 @@ final class PlainHttpRequest {
         
         $class->{PlainHttpRequest::getInstance()->getAction() . 'Action'}($this, PlainHttpResponse::getInstance());
     }
-    
+
     /**
      * Throw not found class exception
      * @return void
      */
     private function throwClassNotFoundException() {
+        $modulesPath = PlainConfig::getInstance()->getModulesDirectories();
+        
+        foreach ($modulesPath as $modulePath) {
+            $moduleFiles = scandir($modulePath . DIRECTORY_SEPARATOR . 'controllers');
+            
+            if (!in_array('DefaultIndexController.php', $moduleFiles)) {
+                continue;
+            }
+            
+            $defaultCall = 'DefaultIndexController';
+            $reflectionModule = new ReflectionClass($defaultCall);
+            
+            if ($reflectionModule->hasMethod('indexAction')) {
+                $defaultClass = new $defaultCall();
+                
+                return $defaultClass->{'indexAction'}($this, PlainHttpResponse::getInstance());
+            }
+        }
+        
         $actionName = (PlainHttpRequest::getInstance()->getAction()) ? PlainHttpRequest::getInstance()->getAction()->__toString() : 'notFound';
         $class = new PlainNotFoundActionController();
         $class->{$actionName . 'Action'}($this, PlainHttpResponse::getInstance());
-        return ;
+        return;
     }
-    
+
     /**
      * Retrieve current Module
      * @return String
@@ -231,7 +257,7 @@ final class PlainHttpRequest {
     public function getModule() {
         return $this->module;
     }
-    
+
     /**
      * Current Action name
      * @return String
@@ -239,7 +265,7 @@ final class PlainHttpRequest {
     public function getAction() {
         return $this->action;
     }
-    
+
     /**
      * Retrieve Controller Class name
      * @return String
@@ -247,7 +273,7 @@ final class PlainHttpRequest {
     public function getControllerName() {
         return $this->controller;
     }
-    
+
     /**
      * Retrieve Controller Directory
      * @return String
@@ -255,7 +281,7 @@ final class PlainHttpRequest {
     public function getControllerDirectory() {
         return $this->controllerDirectory;
     }
-    
+
     /**
      * Retrieve Request parameters
      * @return ArrayObject
@@ -263,7 +289,7 @@ final class PlainHttpRequest {
     public function getRequestParameters() {
         return $this->request;
     }
-    
+
     /**
      * Retrieve POST or GET parameter
      * @param string $name
@@ -276,7 +302,7 @@ final class PlainHttpRequest {
             return null;
         }
     }
-    
+
     /**
      * Retrieve POST parameter
      * @param string $name
@@ -289,7 +315,7 @@ final class PlainHttpRequest {
             return null;
         }
     }
-    
+
     /**
      * Retrieve GET parameter
      * @param string $name
@@ -300,6 +326,6 @@ final class PlainHttpRequest {
             return $this->requestGet->offsetGet($name);
         } else {
             return null;
-        }        
+        }
     }
 }

@@ -139,7 +139,7 @@ class PlainConfig {
      * @return string
      */
     public function getConfigDirectory() {
-        return realpath(self::$libraryDirectory . DIRECTORY_SEPARATOR . 'Plainmvc' . DIRECTORY_SEPARATOR . self::$configDirectory);
+        return realpath(self::$libraryDirectory . DIRECTORY_SEPARATOR . 'plainmvc' . DIRECTORY_SEPARATOR . self::$configDirectory);
     }
     
     /**

@@ -17,7 +17,11 @@ For example, you can have a decoupled Controller without inheritance or interfac
 Only with this, you can display your "yourtemplate.tpl" file in some module. PlainHttpRequest and PlainHttpResponse are injected by PlainRequest
 dispatcher on the fly.
 
-
+Default Page:
+    PlainMVC looking for some Controller called DefaultIndexController with indexAction() public method. If found, PlainMVC will displays this method every
+    time when no module or action be setted via URL. For example: -- http://yourserver/Plainmvc/web; -- http://yourserver/Plainmvc/web/index;
+    -- http://yourserver/Plainmvc/web/index/module.    
+--
 PlainMVC has the following directories structure:
 
 /application
@@ -52,7 +56,6 @@ PlainMVC has the following directories structure:
             - index.php <- it's recursive too! Controller File: SomeNameAdminBarController.php
             
 For more examples, you can read Controllers files at /application/modulo/controllers/ and runs the examples.
-
 The URL will like something like as: 
     http://yourserver/plainmvc/web/index/yourModuleName/yourActionName
 or, if you need GET parameters:
