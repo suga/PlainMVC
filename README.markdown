@@ -18,10 +18,10 @@ Only with this, you can display your "yourtemplate.tpl" file in some module. Pla
 dispatcher on the fly.
 
 Default Page:
-    PlainMVC looking for some Controller called DefaultIndexController with indexAction() public method. If found, PlainMVC will displays this method every
-    time when no module or action be setted via URL. For example: -- http://yourserver/Plainmvc/web; -- http://yourserver/Plainmvc/web/index;
-    -- http://yourserver/Plainmvc/web/index/module.    
---
+PlainMVC looking for some Controller called DefaultIndexController with indexAction() public method. If found, PlainMVC will displays this method every
+time when no module or action be setted via URL. For example: -- http://yourserver/Plainmvc/web; -- http://yourserver/Plainmvc/web/index;
+-- http://yourserver/Plainmvc/web/index/module.    
+
 PlainMVC has the following directories structure:
 
 /application
