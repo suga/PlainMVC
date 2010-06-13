@@ -2,8 +2,11 @@
 /**
  * HTTP Request Interceptor
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
- * @package \library\Plainmvc\core\view
- * @version January, 17 2010
+ * @package library
+ * @subpackage plainmvc
+ * @subpackage core
+ * @subpackage view
+ * @version June, 13 2010
  */
 final class PlainHttpRequest {
 
@@ -27,7 +30,7 @@ final class PlainHttpRequest {
 
     /**
      * Post Request Parameters
-     * @var unknown_type
+     * @var ArrayObject
      */
     private $requestPost;
 
@@ -71,9 +74,7 @@ final class PlainHttpRequest {
      * @param String $queryString
      */
     private function __construct(String $queryString) {
-        $this->request = new ArrayObject();
         $this->requestGet = new ArrayObject();
-        $this->requestPost = new ArrayObject();
         
         $str_decodeUrl = str_replace("request=", "", urldecode($queryString));
         $str_decodeUrl = rtrim($str_decodeUrl, ' /'); // yeap, with blank space
@@ -90,18 +91,12 @@ final class PlainHttpRequest {
         
         if ($int_totalModuleActions > 2) {
             // Populating GET Request Parameters
-            for ($i = 0; $i < count($arr_moduleAction) / 2; $i += 2) {
-                $this->requestGet->offsetSet($arr_moduleAction[$i + 2], new String($arr_moduleAction[$i + 3]));
+            for ($i = 2; $i < $int_totalModuleActions; $i += 2) {
+                $this->requestGet->offsetSet($arr_moduleAction[$i], new String($arr_moduleAction[$i + 1]));
             }
         }
-        if (is_array($_POST)) {
-            // Population POST parameters
-            $arr_moduleAction = array_merge($arr_moduleAction, $_POST);
-            
-            foreach ($_POST as $index => $value) {
-                $this->requestPost->offsetSet($index, new String($value));
-            }
-        }
+        
+        $this->parsePostParameters();
         
         $arr_moduleAction = new ArrayObject($arr_moduleAction);
         $this->module = new String($arr_moduleAction->offsetGet(0));
@@ -110,22 +105,47 @@ final class PlainHttpRequest {
             $this->action = new String($arr_moduleAction->offsetGet(1));
         }
         
-        if (!$arr_moduleAction->offsetExists(2)) {
+        if ($arr_moduleAction->count() < 2) {
             return;
         }
-        $arr_moduleAction->offsetUnset(0);
-        $arr_moduleAction->offsetUnset(1);
         
-        for ($i = 0; $i <= $arr_moduleAction->count() / 2; $i += 2) {
-            if (!$arr_moduleAction->offsetExists($i + 2)) {
-                break;
+        $this->request = new ArrayObject(array_merge($this->requestGet->getArrayCopy(), $this->requestPost->getArrayCopy()));
+    }
+
+    /**
+     * Parse HTTP POST parameters
+     * @return void
+     * @access private
+     */
+    private function parsePostParameters() {
+        settype($_POST, 'array');
+        $this->requestPost = new ArrayObject();
+        
+        foreach ($_POST as $index => $value) {
+            if (is_array($value)) {
+                $this->requestPost->offsetSet($index, $this->array2ArrayObject($value));
+            } else {
+                $this->requestPost->offsetSet($index, new String($value));
             }
-            if (is_bool($arr_moduleAction->offsetGet($i + 2)) || $arr_moduleAction->offsetGet($i + 2) == "") {
-                continue;
-            }
-            $parameter = ($arr_moduleAction->offsetExists($i + 3)) ? $arr_moduleAction->offsetGet($i + 3) : null;
-            $this->request->offsetSet($arr_moduleAction->offsetGet($i + 2), new String($parameter));
         }
+    }
+
+    /**
+     * Converts array into ArrayObject with indices for hashes
+     * @param array $array
+     * @return ArrayObject
+     */
+    private function array2ArrayObject($array) {
+        $hash = new ArrayObject();
+        
+        foreach ($array as $index => $value) {
+            if (is_array($value)) {
+                $hash->offsetSet($index, $this->array2ArrayObject($value));
+            } else {
+                $hash->offsetSet($index, new String($value));
+            }
+        }
+        return $hash;
     }
 
     /**
@@ -134,9 +154,18 @@ final class PlainHttpRequest {
      */
     public static function getInstance() {
         if (!self::$instance instanceof PlainHttpRequest) {
-            self::$instance = new PlainHttpRequest(new String($_SERVER['QUERY_STRING']));
+            $querystring = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+            self::$instance = new PlainHttpRequest(new String($querystring));
         }
         return self::$instance;
+    }
+
+    /**
+     * Unset PlainHttpRequest instance
+     * @return void
+     */
+    public function kill() {
+        self::$instance = null;
     }
 
     /**
