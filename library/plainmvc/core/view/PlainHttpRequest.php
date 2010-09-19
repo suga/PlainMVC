@@ -359,6 +359,24 @@ final class PlainHttpRequest {
     }
     
     /**
+     * Escreve um valor em sessão
+     * @param string $name
+     * @param mixed $value
+     */
+    public function writeSession($name, $value) {
+        $_SESSION[$name] = serialize($value);
+    }
+    
+    /**
+     * Retorna a sessão
+     * @param string $name
+     * @return mixed
+     */
+    public function getSession($name) {
+        return isset($_SESSION[$name]) ? unserialize($_SESSION[$name]) : false;
+    }
+    
+    /**
      * Returns application root path
      * @return string
      */

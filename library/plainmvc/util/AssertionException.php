@@ -13,7 +13,7 @@ class AssertionException extends RuntimeException {
      */
     public function __construct($condition, $details) {
         $path = realpath(dirname(__FILE__) . "/../../../" . "/log/");
-        $logfile = "/assert.log";
+        $logfile = $path . "/assert.log";
         
         if (!file_exists($logfile)) {
             touch($path . $logfile);
