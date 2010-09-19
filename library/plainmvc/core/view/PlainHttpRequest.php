@@ -357,4 +357,36 @@ final class PlainHttpRequest {
             return null;
         }
     }
+    
+    /**
+     * Returns application root path
+     * @return string
+     */
+    public function getPathBase() {
+        return realpath(dirname(__FILE__) . '/../../../../');
+    }
+    
+    /**
+     * Returns public application root path
+     * @return string
+     */
+    public function getPublicPathBase() {
+        return realpath(dirname(__FILE__) . '/../../../../web');
+    }
+    
+    /**
+     * Returns application's root URL address
+     * @return string
+     */
+    public function getUrlBase() {
+        return  "http://" . $_SERVER['HTTP_HOST'] . '/';
+    }
+    
+    /**
+     * Retrieve current address
+     * @return string
+     */
+    public function getCurrentUrl() {
+        return $this->getUrlBase() . 'index/' . $this->getModule() . '/' . $this->getAction();
+    }
 }
