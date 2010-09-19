@@ -377,6 +377,16 @@ final class PlainHttpRequest {
     }
     
     /**
+     * Remova a session
+     * @param string $name
+     */
+    public function removeSession($name) {
+        if (isset($_SESSION[$name])) {
+            unset($_SESSION[$name]);
+        }
+    }
+    
+    /**
      * Returns application root path
      * @return string
      */
