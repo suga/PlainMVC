@@ -92,7 +92,7 @@ final class PlainHttpRequest {
         if ($int_totalModuleActions > 2) {
             // Populating GET Request Parameters
             for ($i = 2; $i < $int_totalModuleActions; $i += 2) {
-                $this->requestGet->offsetSet($arr_moduleAction[$i], new String($arr_moduleAction[$i + 1]));
+                $this->requestGet->offsetSet($arr_moduleAction[$i], isset($arr_moduleAction[$i + 1]) ? new String($arr_moduleAction[$i + 1]) : new String(""));
             }
         }
         
@@ -357,35 +357,51 @@ final class PlainHttpRequest {
             return null;
         }
     }
-    
+
     /**
-     * Escreve um valor em sessão
+     * Writes a value on session name
      * @param string $name
      * @param mixed $value
      */
     public function writeSession($name, $value) {
         $_SESSION[$name] = serialize($value);
     }
-    
+
     /**
-     * Retorna a sessão
+     * Retrieve session name
      * @param string $name
      * @return mixed
      */
     public function getSession($name) {
         return isset($_SESSION[$name]) ? unserialize($_SESSION[$name]) : false;
     }
-    
+
     /**
-     * Remova a session
+     * Return and drop session name
      * @param string $name
+     * @return mixed
+     */
+    public function getAndUnsetSession($name) {
+        if (isset($_SESSION[$name])) {
+            $value = unserialize($_SESSION[$name]);
+            unset($_SESSION[$name]);
+            
+            return $value;
+        }
+        return false;
+    }
+
+    /**
+     * Only drop Session
+     * @param string $name
+     * @return void
      */
     public function removeSession($name) {
         if (isset($_SESSION[$name])) {
             unset($_SESSION[$name]);
         }
-    }
-    
+    }    
+
     /**
      * Returns application root path
      * @return string
@@ -393,7 +409,7 @@ final class PlainHttpRequest {
     public function getPathBase() {
         return realpath(dirname(__FILE__) . '/../../../../');
     }
-    
+
     /**
      * Returns public application root path
      * @return string
@@ -401,15 +417,15 @@ final class PlainHttpRequest {
     public function getPublicPathBase() {
         return realpath(dirname(__FILE__) . '/../../../../web');
     }
-    
+
     /**
      * Returns application's root URL address
      * @return string
      */
     public function getUrlBase() {
-        return  "http://" . $_SERVER['HTTP_HOST'] . '/';
+        return "http://" . $_SERVER['HTTP_HOST'] . '/';
     }
-    
+
     /**
      * Retrieve current address
      * @return string
