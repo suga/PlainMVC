@@ -14,7 +14,8 @@ class Project {
     private $foobar;
     
     
-    
+    /**
+     */
     public function getFoobar() {
         return 0;
     }
