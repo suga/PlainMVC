@@ -1,4 +1,5 @@
 <?php
+namespace Library\PlainMVC\Core\Types;
 /**
  * Numeric types
  * @author hlegius

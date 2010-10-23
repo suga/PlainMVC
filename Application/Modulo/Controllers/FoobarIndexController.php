@@ -1,4 +1,10 @@
 <?php
+namespace Application\Modulo\Controllers;
+
+use Library\PlainMVC\Core\View\PlainHttpRequest;
+use Library\PlainMVC\Core\View\PlainHttpResponse;
+use Library\PlainMVC\Util\Assertion;
+
 /**
  * Other "modulo" module Controller for /web/ directory
  * For /web/admin directory, see FoobarAdminController.php file

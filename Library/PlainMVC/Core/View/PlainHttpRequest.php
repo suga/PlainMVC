@@ -1,4 +1,9 @@
 <?php
+namespace Library\PlainMVC\Core\View;
+
+use Library\PlainMVC\Core\Types\String;
+use Library\PlainMVC\Core\PlainConfig;
+
 /**
  * HTTP Request Interceptor
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
@@ -74,13 +79,13 @@ final class PlainHttpRequest {
      * @param String $queryString
      */
     private function __construct(String $queryString) {
-        $this->requestGet = new ArrayObject();
+        $this->requestGet = new \ArrayObject();
         
         $str_decodeUrl = str_replace("request=", "", urldecode($queryString));
         $str_decodeUrl = rtrim($str_decodeUrl, ' /'); // yeap, with blank space
         $arr_moduleAction = explode('/', $str_decodeUrl);
         $int_totalModuleActions = count($arr_moduleAction);
-        
+                
         if (empty($str_decodeUrl)) {
             return;
         }
@@ -98,7 +103,7 @@ final class PlainHttpRequest {
         
         $this->parsePostParameters();
         
-        $arr_moduleAction = new ArrayObject($arr_moduleAction);
+        $arr_moduleAction = new \ArrayObject($arr_moduleAction);
         $this->module = new String($arr_moduleAction->offsetGet(0));
         
         if ($arr_moduleAction->offsetExists(1)) {
@@ -109,7 +114,7 @@ final class PlainHttpRequest {
             return;
         }
         
-        $this->request = new ArrayObject(array_merge($this->requestGet->getArrayCopy(), $this->requestPost->getArrayCopy()));
+        $this->request = new \ArrayObject(array_merge($this->requestGet->getArrayCopy(), $this->requestPost->getArrayCopy()));
     }
 
     /**
@@ -119,7 +124,7 @@ final class PlainHttpRequest {
      */
     private function parsePostParameters() {
         settype($_POST, 'array');
-        $this->requestPost = new ArrayObject();
+        $this->requestPost = new \ArrayObject();
         
         foreach ($_POST as $index => $value) {
             if (is_array($value)) {
@@ -136,7 +141,7 @@ final class PlainHttpRequest {
      * @return ArrayObject
      */
     private function array2ArrayObject($array) {
-        $hash = new ArrayObject();
+        $hash = new \ArrayObject();
         
         foreach ($array as $index => $value) {
             if (is_array($value)) {
@@ -200,33 +205,38 @@ final class PlainHttpRequest {
      */
     public function dispatch($dirname = '') {
         if (!self::getModule()) {
-            $this->throwClassNotFoundException();
+            $this->throwClassNotFoundException($dirname);
             return;
         }
-        $str_directory = PlainConfig::getInstance()->getApplicationDirectory() . DIRECTORY_SEPARATOR . PlainHttpRequest::getInstance()->getModule() . DIRECTORY_SEPARATOR . PlainConfig::CONTROLLERS_DIRECTORY;
+        $str_directory = PlainHttpRequest::getInstance()->getModule() . DIRECTORY_SEPARATOR . PlainConfig::CONTROLLERS_DIRECTORY;
+        $directories = explode(DIRECTORY_SEPARATOR, $str_directory);
         
+        $str_directory = PlainConfig::getInstance()->getApplicationDirectory() . DIRECTORY_SEPARATOR . join(DIRECTORY_SEPARATOR, array_map("ucwords", $directories));
+
         if (!is_dir($str_directory)) {
-            $this->throwClassNotFoundException();
+            $this->throwClassNotFoundException($dirname);
             return;
         }
         $this->generateDirname($dirname);
         $class = null;
         
-        /** @todo helio.costa -- ele poderia aprender os caminhos para evitar foreach futuro em tempo de execução :) */
         foreach (scandir($str_directory) as $file) {
             $classFile = $str_directory . DIRECTORY_SEPARATOR . $file;
             
             if (strpos($classFile, $this->directorySuffix . 'Controller.php') === false) {
                 continue;
             }
+            $namespace = $this->getNamespaceFor($classFile);
+
             $className = substr($file, 0, -(strlen('Controller.php')));
-            $className = $className . 'Controller';
+            $className = $namespace . $className . 'Controller';
+            
             try {
-                $reflection = new ReflectionClass($className);
+                $reflection = new \ReflectionClass($className);
                 $method = PlainHttpRequest::getInstance()->getAction() . 'Action';
                 
                 if ($reflection->hasMethod($method)) {
-                    $reflectionMethod = new ReflectionMethod($className, $method);
+                    $reflectionMethod = new \ReflectionMethod($className, $method);
                     
                     if ($reflectionMethod->isPublic() && !$reflectionMethod->isStatic()) {
                         $class = new $className();
@@ -248,23 +258,41 @@ final class PlainHttpRequest {
         
         $class->{PlainHttpRequest::getInstance()->getAction() . 'Action'}($this, PlainHttpResponse::getInstance());
     }
+    
+    /**
+     * Retrieve namespace for file
+     * @param string $file
+     * @return string
+     */
+    public function getNamespaceFor($file) {
+        $relativePath = str_replace($this->getPathBase(), '', $file);        
+        $directories = explode(DIRECTORY_SEPARATOR, $relativePath);
+        unset($directories[0], $directories[count($directories)]);
+        
+        return join("\\", array_map('ucwords', $directories)) . "\\";
+    }
 
     /**
      * Throw not found class exception
      * @return void
      */
-    private function throwClassNotFoundException() {
+    private function throwClassNotFoundException($dirname) {
+        $subdirectory = str_replace($this->getPathBase() . DIRECTORY_SEPARATOR . 'web', '', $dirname);
+        $subdirectory = empty($subdirectory) ? 'Index' : $subdirectory;
+        $subdirectories = explode(DIRECTORY_SEPARATOR, $subdirectory);
+        
+        $suffix = join("", array_map("ucwords", $subdirectories));
         $modulesPath = PlainConfig::getInstance()->getModulesDirectories();
         
         foreach ($modulesPath as $modulePath) {
-            $moduleFiles = scandir($modulePath . DIRECTORY_SEPARATOR . 'controllers');
+            $moduleFiles = scandir($modulePath . DIRECTORY_SEPARATOR . 'Controllers');
             
-            if (!in_array('DefaultIndexController.php', $moduleFiles)) {
+            if (!in_array("Default{$suffix}Controller.php", $moduleFiles)) {
                 continue;
             }
             
-            $defaultCall = 'DefaultIndexController';
-            $reflectionModule = new ReflectionClass($defaultCall);
+            $defaultCall = "Application\Modulo\Controllers\Default{$suffix}Controller";
+            $reflectionModule = new \ReflectionClass($defaultCall);
             
             if ($reflectionModule->hasMethod('indexAction')) {
                 $defaultClass = new $defaultCall();

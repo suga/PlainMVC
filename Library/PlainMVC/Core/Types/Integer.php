@@ -1,4 +1,5 @@
 <?php
+namespace Library\PlainMVC\Core\Types;
 /**
  * Integer type class
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>

@@ -1,4 +1,5 @@
 <?php
+namespace Library\PlainMVC\Core\View;
 /**
  * NotFound Action method Controller
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>

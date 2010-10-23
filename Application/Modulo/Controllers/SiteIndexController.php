@@ -1,4 +1,9 @@
 <?php
+namespace Application\Modulo\Controllers;
+
+use Library\PlainMVC\Core\View\PlainHttpRequest;
+use Library\PlainMVC\Core\View\PlainHttpResponse;
+
 /**
  * My Controller example
  * To access this see details in every method below.
@@ -27,6 +32,7 @@ class SiteIndexController {
      * @param $request
      */
     public function barfoobazAction(PlainHttpRequest $request) {
+        var_dump(__METHOD__);
         echo $request->getControllerDirectory();
     }
 }

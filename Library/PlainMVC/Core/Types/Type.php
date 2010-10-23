@@ -1,4 +1,5 @@
 <?php
+namespace Library\PlainMVC\Core\Types;
 /**
  * Default Type
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>

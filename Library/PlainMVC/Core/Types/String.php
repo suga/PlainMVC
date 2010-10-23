@@ -1,4 +1,5 @@
 <?php
+namespace Library\PlainMVC\Core\Types;
 /**
  * String type
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>

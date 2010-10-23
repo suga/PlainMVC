@@ -1,4 +1,5 @@
 <?php
+namespace Library\PlainMVC\Internals\Spyc;
 /**
    * Spyc -- A Plain PHP YAML Class
    * @version 0.4.5

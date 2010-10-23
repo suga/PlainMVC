@@ -22,3 +22,27 @@ Condition: 'bar' == 'baz'
 Details: FoobarActionController @online 15
 -----------------------------------------------
 
+-- Sat 10 2010 17:49:49 --
+[assert error] 
+Condition: 
+Details: Application\Modulo\Controllers\FoobarIndexController @online 35
+-----------------------------------------------
+
+-- Sat, 23 10 2010 17:50:27 --
+[assert error] 
+Condition: 
+Details: Application\Modulo\Controllers\FoobarIndexController @online 35
+-----------------------------------------------
+
+-- Sat, 23 Oct 2010 17:50:44 --
+[assert error] 
+Condition: 
+Details: Application\Modulo\Controllers\FoobarIndexController @online 35
+-----------------------------------------------
+
+-- Sat, 23 Oct 2010 17:51:51 --
+[assert error] 
+Condition: 
+Details: Application\Modulo\Controllers\FoobarIndexController @online 35
+-----------------------------------------------
+

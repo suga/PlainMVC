@@ -1,4 +1,9 @@
 <?php
+namespace Library\PlainMVC\Core\View;
+
+use Library\PlainMVC\Core\PlainConfig;
+use Library\PlainMVC\Core\Types\String;
+
 /**
  * Facade for Twig_Environment
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
@@ -39,10 +44,10 @@ final class PlainTemplate {
                 }
             }
         }
-        $twigLoader = new Twig_Loader_Filesystem($templatesDirs);
-        self::$template = new Twig_Environment($twigLoader, array('cache' => (PlainConfig::getInstance()->getTempDirectory() . 
+        $twigLoader = new \Twig_Loader_Filesystem($templatesDirs);
+        self::$template = new \Twig_Environment($twigLoader, array('cache' => (PlainConfig::getInstance()->getTempDirectory() . 
                                                                                     DIRECTORY_SEPARATOR . 'tpl_cache')));    
-        $this->variables = new ArrayObject();
+        $this->variables = new \ArrayObject();
     }
 
     /**

@@ -1,4 +1,9 @@
 <?php
+namespace Library\PlainMVC\Util;
+
+use Library\PlainMVC\Internals\Spyc\Spyc;
+use Library\PlainMVC\Core\PlainConfig;
+
 /**
  * Assertion class
  * @author Hélio Costa e Silva <hlegius@foobug.com.br>
@@ -46,10 +51,9 @@ class Assertion {
     public function __construct() {
         if (is_null(self::$rootconfig)) {
             $spyc = new Spyc();
-            self::$rootconfig = $spyc->load(PlainConfig::getInstance()->getConfigDirectory() . DIRECTORY_SEPARATOR . 'root.yml');
+            self::$rootconfig = $spyc->loadFile(PlainConfig::getInstance()->getConfigDirectory() . DIRECTORY_SEPARATOR . 'root.yml');
         }
-                
-        /* @todo helio.costa -- preciso ler do YML */
+
         $this->status = self::$rootconfig['Plain']['assert_' . self::$rootconfig['Plain']['application']];
         
         if ($this->getStatus() == self::ENABLED) {

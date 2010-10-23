@@ -1,4 +1,5 @@
 <?php
+namespace Library\PlainMVC\Core;
 /**
  * Plain general Configuration
  * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
@@ -25,7 +26,7 @@ class PlainConfig {
      * Application directory directory
      * @var string
      */
-    private static $applicationDirectory = 'application/';
+    private static $applicationDirectory = 'Application/';
     /**
      * Public Web directory
      * @var string
@@ -50,31 +51,31 @@ class PlainConfig {
      * Templates directories pattern
      * @var string
      */
-    private static $templateDirectory = 'views';
+    private static $templateDirectory = 'Views';
     /**
      * Configuration directory
      * @var string
      */
-    private static $configDirectory = 'config';
+    private static $configDirectory = 'Config';
     /**
      * Controller Directory
      * @var string
      */
-    const CONTROLLERS_DIRECTORY = 'controllers';
+    const CONTROLLERS_DIRECTORY = 'Controllers';
     
     
     /**
      * Constructor
      */
     private function __construct() {
-        self::$modulesDirectories = new ArrayObject();
+        self::$modulesDirectories = new \ArrayObject();
         
         self::$applicationDirectory = str_replace('/', DIRECTORY_SEPARATOR, self::$applicationDirectory);
         self::$foodir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
         self::$applicationDirectory = realpath(self::$foodir . self::$applicationDirectory);
         self::$publicDirectory = realpath(self::$foodir . DIRECTORY_SEPARATOR . 'web');
-        self::$libraryDirectory = realpath(self::$foodir . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR);
-        $this->directoryTree = new ArrayObject();
+        self::$libraryDirectory = realpath(self::$foodir . DIRECTORY_SEPARATOR . 'Library' . DIRECTORY_SEPARATOR);
+        $this->directoryTree = new \ArrayObject();
     }
     
     /**
@@ -139,7 +140,7 @@ class PlainConfig {
      * @return string
      */
     public function getConfigDirectory() {
-        return realpath(self::$libraryDirectory . DIRECTORY_SEPARATOR . 'plainmvc' . DIRECTORY_SEPARATOR . self::$configDirectory);
+        return realpath(self::$libraryDirectory . DIRECTORY_SEPARATOR . 'PlainMVC' . DIRECTORY_SEPARATOR . self::$configDirectory);
     }
     
     /**
@@ -167,6 +168,14 @@ class PlainConfig {
      */
     public function getTemplatesDirPattern() {
         return self::$templateDirectory;
+    }
+    
+    /**
+     * Retrieve ROOT directory
+     * @return string
+     */
+    public function getRootDirectory() {
+        return self::$foodir;
     }
 
     /**
