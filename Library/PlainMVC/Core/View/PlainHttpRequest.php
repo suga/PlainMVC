@@ -240,6 +240,14 @@ final class PlainHttpRequest {
                     
                     if ($reflectionMethod->isPublic() && !$reflectionMethod->isStatic()) {
                         $class = new $className();
+                        
+                        if ($reflection->hasMethod('filter')) {
+                            $prefilterMethod = new \ReflectionMethod($className, 'filter');
+                            if ($prefilterMethod->isPublic() && !$reflectionMethod->isStatic()) {
+                                $class->filter($this, PlainHttpResponse::getInstance());
+                            }
+                        }
+                        
                         break;
                     }
                 }
