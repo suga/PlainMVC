@@ -1,0 +1,40 @@
+Plain:
+#  application: 
+    type: 'production'
+    database:
+      driver: 'pdo_mysql'
+      dbname: 'fooprod'
+      user: 'hlegius'
+      pass: 'var'
+      host: 'localhost:3306'    
+    assert: 'off'
+
+#  application:
+    type: "continuous-integration"
+    database:
+      driver: 'pdo_mysql'
+      dbname: 'plainmvc'
+      user: 'hlegius'
+      pass: '987654'
+      host: '127.0.0.1'    
+    assert: 'on'
+      
+  application:
+    type: "development"
+    database:
+      driver: 'pdo_mysql'
+      dbname: 'plainmvc'
+      user: 'hlegius'
+      pass: '987654'
+      host: '127.0.0.1'    
+    assert: 'on'
+
+  testsuite:
+    type: "test-suite"
+    database:
+      driver: 'pdo_mysql'
+      dbname: 'foo-test'
+      user: 'test-user'
+      pass: 'foo'
+      host: 'doctrine-array-memcached'    
+    assert: 'on'

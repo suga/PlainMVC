@@ -1,5 +1,4 @@
 <?php
-require_once dirname(__FILE__) . '/PlainMVC/Core/Autoload.php';
 
 $classLoader = new \Doctrine\Common\ClassLoader('Doctrine');
 $classLoader->register();

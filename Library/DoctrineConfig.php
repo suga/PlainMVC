@@ -1,39 +1,52 @@
 <?php
+/**
+ * Doctrine custom configurations
+ * @author Hélio Costa e Silva <hlegius@yahoo.com.br>
+ * @package Library
+ */
 namespace Library;
 
-use Library\PlainMVC\Core\View;
-use Library\PlainMVC\Core;
+use Library\PlainMVC\Core\View, Library\PlainMVC\Core;
+use Doctrine\ORM\EntityManager, Doctrine\ORM\Configuration, Doctrine\Common\Cache\ArrayCache;
 
-use Doctrine\ORM\EntityManager,
-    Doctrine\ORM\Configuration,
-    Doctrine\Common\Cache\ArrayCache;
-
-//if ($applicationMode == "development") {
+$settings = Core\PlainConfig::getInstance()->getApplicationConfig();    
+    
+if ($settings['type'] != "production") {
     $cache = new \Doctrine\Common\Cache\ArrayCache;
-//} else {
-//    $cache = new \Doctrine\Common\Cache\ApcCache;
-//}
+} else {
+    $cache = new \Doctrine\Common\Cache\ApcCache;
+}
 
 $config = new Configuration;
 $config->setMetadataCacheImpl($cache);
+
+## Doctrine Metadata configuration
+// Annotation
 $driverImpl = $config->newDefaultAnnotationDriver(Core\PlainConfig::getInstance()->getApplicationDirectory());
+// Yaml files
+//$driver = new YamlDriver(array(dirname(__FILE__) . '/../schema/'));
+//$config->setMetadataDriverImpl($driver);
+// XML files
+//$driver = new \Doctrine\ORM\Mapping\Driver\XmlDriver(array('/path/to/xmlfiles'));
+//$config->setMetadataDriverImpl($driver);
+
+
 $config->setMetadataDriverImpl($driverImpl);
 $config->setQueryCacheImpl($cache);
 $config->setProxyDir(Core\PlainConfig::getInstance()->getApplicationDirectory());
 $config->setProxyNamespace(View\PlainHttpRequest::getInstance()->getNamespaceFor(Core\PlainConfig::getInstance()->getApplicationDirectory()));
 
-//if ($applicationMode == "development") {
+if ($settings['type'] != "production") {
     $config->setAutoGenerateProxyClasses(true);
-//} else {
-//    $config->setAutoGenerateProxyClasses(false);
-//}
-
+} else {
+    $config->setAutoGenerateProxyClasses(false);
+}
 $connectionOptions = array(
-    'driver'   => 'pdo_mysql',
-    'host'     => '127.0.0.1',
-    'dbname'   => 'plainmvc',
-    'user'     => 'hlegius',
-    'password' => '987654'
+    'driver'   => $settings['database']['driver'],
+    'host'     => $settings['database']['host'],
+    'dbname'   => $settings['database']['dbname'],
+    'user'     => $settings['database']['user'],
+    'password' => $settings['database']['pass']
 );
 
 class DoctrineConfig {
@@ -46,6 +59,7 @@ class DoctrineConfig {
     }
     
     /**
+     * Retrieve EntityManager
      * @return \Doctrine\ORM\EntityManager
      */
     public static function getInstance() {

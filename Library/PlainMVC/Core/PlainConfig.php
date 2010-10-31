@@ -179,6 +179,33 @@ class PlainConfig {
     }
 
     /**
+     * Config/setting.xml ArrayObject indexes
+     * @return array
+     */
+    private function getRootConfig() {
+        $yamldriver = new \Library\PlainMVC\Internals\Spyc\Spyc();
+        return $yamldriver->loadfile(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'settings.yml');
+    }
+    
+    /**
+     * Retrieve settings.yml application configs section
+     * @return array
+     */
+    public function getApplicationConfig() {
+        $settings = $this->getRootConfig();
+        return $settings['Plain']['application'];
+    }
+    
+    /**
+     * Retrieve settings.xml testsuite configs section
+     * @return array
+     */
+    public function getTestSuiteConfig() {
+        $settings = $this->getRootConfig();
+        return $settings['Plain']['testsuite'];
+    }
+    
+    /**
      * Scan subdirectories
      * @param string $directory
      * @return void
