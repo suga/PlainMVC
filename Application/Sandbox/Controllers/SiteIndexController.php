@@ -1,26 +1,26 @@
 <?php
-namespace Application\Doctrine\Controllers;
+namespace Application\Sandbox\Controllers;
 
-use Library\PlainMVC\Core\View\PlainHttpRequest, Application\Doctrine, Library\DoctrineConfig;
+use Library\PlainMVC\Core\View\PlainHttpRequest, Application\Sandbox, Library\DoctrineConfig;
 
 class SiteIndexController {
 
     public function indexAction(PlainHttpRequest $request) {
-        $address = new Doctrine\Address();
-        $user = new Doctrine\User();
+        $address = new Sandbox\Address();
+        $user = new Sandbox\User();
         
         echo 'Por enquanto, tudo oka !';
         
-        $user = new Doctrine\User();
+        $user = new Sandbox\User();
         $user->setName('Hélio');
         
         DoctrineConfig::getInstance()->persist($user);
         DoctrineConfig::getInstance()->flush();
         
         echo "User saved!";
-        /* @var $garfield \Application\Doctrine\User */
-        $garfield = DoctrineConfig::getInstance()->find('\Application\Doctrine\User', 1);
-        $userRepository  = DoctrineConfig::getInstance()->getRepository('\Application\Doctrine\User');
+        /* @var $garfield \Application\Sandbox\User */
+        $garfield = DoctrineConfig::getInstance()->find('\Application\Sandbox\User', 1);
+        $userRepository  = DoctrineConfig::getInstance()->getRepository('\Application\Sandbox\User');
         
         $hlegius = new \ArrayObject($userRepository->findByName('Hélio'));
         

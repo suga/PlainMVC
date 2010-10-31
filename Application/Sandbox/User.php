@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Doctrine;
+namespace Application\Sandbox;
 
 /** @Entity @Table(name="users") */
 class User

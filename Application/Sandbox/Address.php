@@ -1,5 +1,5 @@
 <?php
-namespace Application\Doctrine;
+namespace Application\Sandbox;
 
 /** @Entity @Table(name="addresses") */
 class Address
