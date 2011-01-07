@@ -1,4 +1,0 @@
-#!/usr/bin/env php
-<?php
-require_once dirname(__FILE__) . '/PlainMVC/Core/Autoload.php';
-include(dirname(__FILE__) . "/doctrine.php");

@@ -4,7 +4,6 @@ namespace Library\PlainMVC\Core;
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'PlainConfig.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Internals' . DIRECTORY_SEPARATOR . 'Twig/Autoloader.php';
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Doctrine' . DIRECTORY_SEPARATOR . 'Common' . DIRECTORY_SEPARATOR . 'ClassLoader.php';
 
 /**
  * Autoload classes
@@ -25,8 +24,3 @@ function __autoload($class) {
 
 \Twig_Autoloader::register();
 spl_autoload_register(__NAMESPACE__ . '\__autoload');
-
-$classLoader = new \Doctrine\Common\ClassLoader('Doctrine', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
-$classLoader->register();
-
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'DoctrineConfig.php';
