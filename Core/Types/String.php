@@ -100,33 +100,49 @@ final class String extends Type {
     /**
      * Removes accentuation
      * @return string
-     * @todo implementar :)
      */
     public function accentuationStrip() {
-        $str_temp = str_replace('á', 'Á', $this->content);
-        $str_temp = str_replace('à', 'À', $str_temp);
-        $str_temp = str_replace('ã', 'Ã', $str_temp);
-        $str_temp = str_replace('â', 'Â', $str_temp);
-        $str_temp = str_replace('é', 'É', $str_temp);
-        $str_temp = str_replace('è', 'È', $str_temp);
-        $str_temp = str_replace('ê', 'Ê', $str_temp);
-        $str_temp = str_replace('ë', 'Ë', $str_temp);
-        $str_temp = str_replace('í', 'Í', $str_temp);
-        $str_temp = str_replace('ì', 'Ì', $str_temp);
-        $str_temp = str_replace('ï', 'Ï', $str_temp);
-        $str_temp = str_replace('ó', 'Ó', $str_temp);
-        $str_temp = str_replace('ó', 'Ò', $str_temp);
-        $str_temp = str_replace('õ', 'Õ', $str_temp);
-        $str_temp = str_replace('ô', 'Ô', $str_temp);
-        $str_temp = str_replace('ú', 'Ú', $str_temp);
-        $str_temp = str_replace('ù', 'Ù', $str_temp);
-        $str_temp = str_replace('ü', 'ü', $str_temp);
-        $str_temp = str_replace('ç', 'Ç', $str_temp);
+        $str_temp = str_replace('á', 'a', $this->content);
+        $str_temp = str_replace('à', 'a', $str_temp);
+        $str_temp = str_replace('ã', 'a', $str_temp);
+        $str_temp = str_replace('â', 'a', $str_temp);
+        $str_temp = str_replace('é', 'e', $str_temp);
+        $str_temp = str_replace('è', 'e', $str_temp);
+        $str_temp = str_replace('ê', 'e', $str_temp);
+        $str_temp = str_replace('ë', 'e', $str_temp);
+        $str_temp = str_replace('í', 'i', $str_temp);
+        $str_temp = str_replace('ì', 'i', $str_temp);
+        $str_temp = str_replace('ï', 'i', $str_temp);
+        $str_temp = str_replace('ó', 'o', $str_temp);
+        $str_temp = str_replace('ó', 'o', $str_temp);
+        $str_temp = str_replace('õ', 'o', $str_temp);
+        $str_temp = str_replace('ô', 'o', $str_temp);
+        $str_temp = str_replace('ú', 'u', $str_temp);
+        $str_temp = str_replace('ù', 'u', $str_temp);
+        $str_temp = str_replace('ü', 'u', $str_temp);
+        $str_temp = str_replace('ç', 'c', $str_temp);
         
         return $str_temp;        
     }
     
-    public function toUrl() { }
+    /**
+     * Converts into HTTP Ref.
+     * @return string
+     */
+    public function toUrl() {
+        // converting some characters entered "accidentally".
+        $stripItems = array('-', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '=', '[', ']', '{', '}', '|', "\\", '?', '/', '<', '>', ';', ':', '"', "'");
+        $url = new String($this->accentuationToLower());
+        $url = $url->accentuationStrip();
+        $url = str_replace($stripItems, array(), $url);
+        
+        if (!preg_match("/[[:alpha:]]/", $url)) {
+            return false;
+        }
+        
+        return $url;
+    }
     
     public function fromUrl() { }
 }
+
