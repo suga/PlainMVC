@@ -19,6 +19,8 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATO
 function __autoload($class) {
     if (file_exists(\Library\PlainMVC\Core\PlainConfig::getInstance()->getRootDirectory() . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php')) {
         require_once \Library\PlainMVC\Core\PlainConfig::getInstance()->getRootDirectory() . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+    } elseif (file_exists(\Library\PlainMVC\Core\PlainConfig::getInstance()->getLibraryDirectory() . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php')) {
+        require_once \Library\PlainMVC\Core\PlainConfig::getInstance()->getLibraryDirectory() . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
     }
 }
 

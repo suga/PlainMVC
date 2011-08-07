@@ -74,7 +74,7 @@ class PlainConfig {
         self::$foodir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
         self::$applicationDirectory = realpath(self::$foodir . self::$applicationDirectory);
         self::$publicDirectory = realpath(self::$foodir . DIRECTORY_SEPARATOR . 'web');
-        self::$libraryDirectory = realpath(self::$foodir . DIRECTORY_SEPARATOR . 'Library' . DIRECTORY_SEPARATOR);
+        self::$libraryDirectory = realpath(self::$foodir . DIRECTORY_SEPARATOR . 'Library') . DIRECTORY_SEPARATOR;
         $this->directoryTree = new \ArrayObject();
     }
     
