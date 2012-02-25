@@ -33,7 +33,7 @@ final class PlainHttpResponse {
      * @return PlainHttpResponse
      */
     public static function getInstance() {
-        if (!self::$instance instanceof PlainHttpRequest) {
+        if (!self::$instance instanceof PlainHttpResponse) {
             self::$instance = new PlainHttpResponse();
         }
         return self::$instance;
